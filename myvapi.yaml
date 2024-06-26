@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Combined API
-  description: Combined API schema for managing virtual assistant settings and tools
+  title: MyVapi API
+  description: For managing virtual assistant settings and tools
   version: 1.0.0
 servers:
   - url: https://api.vapi.ai
@@ -13,12 +13,12 @@ paths:
       description: Retrieve the current settings of the virtual assistant.
       operationId: getAssistant
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Assistant'
+                $ref: "#/components/schemas/Assistant"
     post:
       summary: Create new assistant settings
       description: Create new settings for the virtual assistant.
@@ -28,14 +28,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AssistantInput'
+              $ref: "#/components/schemas/AssistantInput"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Assistant'
+                $ref: "#/components/schemas/Assistant"
   /assistant/{id}:
     get:
       summary: Get assistant settings by ID
@@ -49,12 +49,12 @@ paths:
             type: string
           description: ID of the assistant
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Assistant'
+                $ref: "#/components/schemas/Assistant"
     patch:
       summary: Update assistant settings by ID
       description: Update the settings of a specific virtual assistant by its ID.
@@ -71,14 +71,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AssistantInput'
+              $ref: "#/components/schemas/AssistantInput"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Assistant'
+                $ref: "#/components/schemas/Assistant"
     delete:
       summary: Delete assistant settings by ID
       description: Delete the settings of a specific virtual assistant by its ID.
@@ -91,7 +91,7 @@ paths:
             type: string
           description: ID of the assistant
       responses:
-        '204':
+        "204":
           description: No content
   /call:
     get:
@@ -101,14 +101,14 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Array of phone call records
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PhoneCall'
+                  $ref: "#/components/schemas/PhoneCall"
   /call/{id}:
     get:
       summary: Retrieve details of a specific phone call by ID
@@ -124,12 +124,55 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Detailed information of the phone call
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PhoneCall'
+                $ref: "#/components/schemas/PhoneCall"
+    patch:
+      summary: Update phone call by ID
+      description: Update the details of a specific phone call by its ID.
+      operationId: updatePhoneCallById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the phone call
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdatedPhoneCallResponse"
+    delete:
+      summary: Delete phone call by ID
+      description: Delete a specific phone call by its ID.
+      operationId: deletePhoneCallById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the phone call
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "204":
+          description: No content
   /call/phone:
     post:
       summary: Create a new phone call
@@ -140,14 +183,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PhoneCallInput'
+              $ref: "#/components/schemas/PhoneCallInput"
       responses:
-        '201':
+        "201":
           description: Phone call successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PhoneCall'
+                $ref: "#/components/schemas/PhoneCall"
   /log:
     get:
       summary: Call Logs
@@ -173,7 +216,9 @@ paths:
           required: false
           schema:
             type: string
-            enum: [ASC, DESC]
+            enum:
+              - ASC
+              - DESC
             default: ASC
         - name: limit
           in: query
@@ -239,7 +284,7 @@ paths:
             type: string
             format: date-time
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
@@ -259,7 +304,10 @@ paths:
                           type: string
                         level:
                           type: string
-                          enum: [INFO, WARN, ERROR]
+                          enum:
+                            - INFO
+                            - WARN
+                            - ERROR
                         time:
                           type: string
                           format: date-time
@@ -280,14 +328,14 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Array of squads
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Squad'
+                  $ref: "#/components/schemas/Squad"
     post:
       summary: Create a new squad
       description: Create a new squad.
@@ -297,14 +345,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SquadInput'
+              $ref: "#/components/schemas/SquadInput"
       responses:
-        '201':
+        "201":
           description: Squad successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Squad'
+                $ref: "#/components/schemas/Squad"
   /squad/{id}:
     get:
       summary: Retrieve details of a specific squad by ID
@@ -320,12 +368,12 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Detailed information of the squad
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Squad'
+                $ref: "#/components/schemas/Squad"
     patch:
       summary: Update a squad by ID
       description: Update the details of a specific squad by its ID.
@@ -342,14 +390,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SquadUpdateInput'
+              $ref: "#/components/schemas/SquadUpdateInput"
       responses:
-        '200':
+        "200":
           description: Squad successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Squad'
+                $ref: "#/components/schemas/Squad"
     delete:
       summary: Delete a squad by ID
       description: Delete a specific squad by its ID.
@@ -362,7 +410,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: No content
   /metrics:
     get:
@@ -372,14 +420,14 @@ paths:
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Metrics data
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Metrics'
+                  $ref: "#/components/schemas/Metrics"
   /tool:
     post:
       operationId: createTool
@@ -390,17 +438,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ToolInput'
+              $ref: "#/components/schemas/ToolInput"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tool'
-        '400':
+                $ref: "#/components/schemas/Tool"
+        "400":
           description: Invalid request
-        '500':
+        "500":
           description: Internal server error
     get:
       operationId: listTools
@@ -471,17 +519,17 @@ paths:
             type: string
             format: date-time
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Tool'
-        '400':
+                  $ref: "#/components/schemas/Tool"
+        "400":
           description: Invalid request
-        '500':
+        "500":
           description: Internal server error
   /tool/{id}:
     get:
@@ -496,15 +544,15 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tool'
-        '400':
+                $ref: "#/components/schemas/Tool"
+        "400":
           description: Invalid request
-        '500':
+        "500":
           description: Internal server error
     patch:
       operationId: updateToolById
@@ -522,17 +570,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ToolInput'
+              $ref: "#/components/schemas/ToolInput"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tool'
-        '400':
+                $ref: "#/components/schemas/Tool"
+        "400":
           description: Invalid request
-        '500':
+        "500":
           description: Internal server error
     delete:
       operationId: deleteToolById
@@ -546,7 +594,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: No content
 components:
   schemas:
@@ -554,11 +602,11 @@ components:
       type: object
       properties:
         transcriber:
-          $ref: '#/components/schemas/Transcriber'
+          $ref: "#/components/schemas/Transcriber"
         model:
-          $ref: '#/components/schemas/Model'
+          $ref: "#/components/schemas/Model"
         voice:
-          $ref: '#/components/schemas/Voice'
+          $ref: "#/components/schemas/Voice"
         forwardingPhoneNumber:
           type: string
         recordingEnabled:
@@ -594,7 +642,7 @@ components:
         forwardingPhoneNumbers:
           type: array
           items:
-            $ref: '#/components/schemas/PhoneNumber'
+            $ref: "#/components/schemas/PhoneNumber"
         firstMessage:
           type: string
         voicemailDetectionEnabled:
@@ -627,11 +675,11 @@ components:
       type: object
       properties:
         transcriber:
-          $ref: '#/components/schemas/TranscriberInput'
+          $ref: "#/components/schemas/TranscriberInput"
         model:
-          $ref: '#/components/schemas/ModelInput'
+          $ref: "#/components/schemas/ModelInput"
         voice:
-          $ref: '#/components/schemas/VoiceInput'
+          $ref: "#/components/schemas/VoiceInput"
         forwardingPhoneNumber:
           type: string
         recordingEnabled:
@@ -667,7 +715,7 @@ components:
         forwardingPhoneNumbers:
           type: array
           items:
-            $ref: '#/components/schemas/PhoneNumberInput'
+            $ref: "#/components/schemas/PhoneNumberInput"
         firstMessage:
           type: string
         voicemailDetectionEnabled:
@@ -718,7 +766,7 @@ components:
         messages:
           type: array
           items:
-            $ref: '#/components/schemas/Message'
+            $ref: "#/components/schemas/Message"
         provider:
           type: string
         model:
@@ -734,7 +782,7 @@ components:
         functions:
           type: array
           items:
-            $ref: '#/components/schemas/Function'
+            $ref: "#/components/schemas/Function"
         maxTokens:
           type: integer
     ModelInput:
@@ -743,7 +791,7 @@ components:
         messages:
           type: array
           items:
-            $ref: '#/components/schemas/MessageInput'
+            $ref: "#/components/schemas/MessageInput"
         provider:
           type: string
         model:
@@ -759,7 +807,7 @@ components:
         functions:
           type: array
           items:
-            $ref: '#/components/schemas/FunctionInput'
+            $ref: "#/components/schemas/FunctionInput"
         maxTokens:
           type: integer
     Message:
@@ -926,6 +974,27 @@ components:
               type: integer
             ttsCharacters:
               type: integer
+            analysisCostBreakdown:
+              type: object
+              properties:
+                summary:
+                  type: integer
+                summaryPromptTokens:
+                  type: integer
+                summaryCompletionTokens:
+                  type: integer
+                structuredData:
+                  type: integer
+                structuredDataPromptTokens:
+                  type: integer
+                structuredDataCompletionTokens:
+                  type: integer
+                successEvaluation:
+                  type: integer
+                successEvaluationPromptTokens:
+                  type: integer
+                successEvaluationCompletionTokens:
+                  type: integer
         transcript:
           type: string
         recordingUrl:
@@ -937,7 +1006,7 @@ components:
         messages:
           type: array
           items:
-            $ref: '#/components/schemas/Message'
+            $ref: "#/components/schemas/Message"
         phoneCallProviderId:
           type: string
         phoneCallProviderBypassEnabled:
@@ -972,7 +1041,7 @@ components:
         assistantId:
           type: string
         assistant:
-          $ref: '#/components/schemas/Assistant'
+          $ref: "#/components/schemas/Assistant"
         customerId:
           type: string
         customer:
@@ -1070,7 +1139,7 @@ components:
         messages:
           type: array
           items:
-            $ref: '#/components/schemas/Message'
+            $ref: "#/components/schemas/Message"
         phoneCallProviderId:
           type: string
         phoneCallProviderBypassEnabled:
@@ -1105,7 +1174,7 @@ components:
         assistantId:
           type: string
         assistant:
-          $ref: '#/components/schemas/Assistant'
+          $ref: "#/components/schemas/Assistant"
         customerId:
           type: string
         customer:
@@ -1144,7 +1213,7 @@ components:
         members:
           type: array
           items:
-            $ref: '#/components/schemas/Member'
+            $ref: "#/components/schemas/Member"
         id:
           type: string
         orgId:
@@ -1161,32 +1230,32 @@ components:
         members:
           type: array
           items:
-            $ref: '#/components/schemas/MemberInput'
+            $ref: "#/components/schemas/MemberInput"
     SquadUpdateInput:
       type: object
       properties:
         members:
           type: array
           items:
-            $ref: '#/components/schemas/MemberInput'
+            $ref: "#/components/schemas/MemberInput"
     Member:
       type: object
       properties:
         assistantId:
           type: string
         assistant:
-          $ref: '#/components/schemas/Assistant'
+          $ref: "#/components/schemas/Assistant"
         assistantOverrides:
-          $ref: '#/components/schemas/Assistant'
+          $ref: "#/components/schemas/Assistant"
     MemberInput:
       type: object
       properties:
         assistantId:
           type: string
         assistant:
-          $ref: '#/components/schemas/AssistantInput'
+          $ref: "#/components/schemas/AssistantInput"
         assistantOverrides:
-          $ref: '#/components/schemas/AssistantInput'
+          $ref: "#/components/schemas/AssistantInput"
     Metrics:
       type: object
       properties:
@@ -1374,6 +1443,206 @@ components:
               type: string
             secret:
               type: string
+    UpdatedPhoneCallResponse:
+      type: object
+      properties:
+        type:
+          type: string
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              role:
+                type: string
+              message:
+                type: string
+              time:
+                type: integer
+              endTime:
+                type: integer
+              secondsFromStart:
+                type: integer
+              duration:
+                type: integer
+        phoneCallProvider:
+          type: string
+          enum:
+            - twilio
+        phoneCallTransport:
+          type: string
+          enum:
+            - sip
+        status:
+          type: string
+          enum:
+            - queued
+        endedReason:
+          type: string
+          enum:
+            - assistant-error
+        id:
+          type: string
+        orgId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+        cost:
+          type: integer
+        costBreakdown:
+          type: object
+          properties:
+            transport:
+              type: integer
+            stt:
+              type: integer
+            llm:
+              type: integer
+            tts:
+              type: integer
+            vapi:
+              type: integer
+            total:
+              type: integer
+            llmPromptTokens:
+              type: integer
+            llmCompletionTokens:
+              type: integer
+            ttsCharacters:
+              type: integer
+            analysisCostBreakdown:
+              type: object
+              properties:
+                summary:
+                  type: integer
+                summaryPromptTokens:
+                  type: integer
+                summaryCompletionTokens:
+                  type: integer
+                structuredData:
+                  type: integer
+                structuredDataPromptTokens:
+                  type: integer
+                structuredDataCompletionTokens:
+                  type: integer
+                successEvaluation:
+                  type: integer
+                successEvaluationPromptTokens:
+                  type: integer
+                successEvaluationCompletionTokens:
+                  type: integer
+        transcript:
+          type: string
+        recordingUrl:
+          type: string
+        stereoRecordingUrl:
+          type: string
+        artifact:
+          type: object
+          properties:
+            videoRecordingUrl:
+              type: string
+            videoRecordingStartDelaySeconds:
+              type: integer
+        artifactPlan:
+          type: object
+          properties:
+            videoRecordingEnabled:
+              type: boolean
+        analysis:
+          type: object
+          properties:
+            summary:
+              type: string
+            structuredData:
+              type: object
+            successEvaluation:
+              type: string
+        phoneCallProviderId:
+          type: string
+        forwardedPhoneNumber:
+          type: string
+        assistantId:
+          type: string
+        assistant:
+          $ref: "#/components/schemas/Assistant"
+        assistantOverrides:
+          $ref: "#/components/schemas/Assistant"
+        squadId:
+          type: string
+        squad:
+          type: object
+          properties:
+            members:
+              type: array
+              items:
+                type: object
+                properties:
+                  assistantId:
+                    type: string
+                  assistant:
+                    $ref: "#/components/schemas/Assistant"
+                  assistantOverrides:
+                    $ref: "#/components/schemas/Assistant"
+        phoneNumberId:
+          type: string
+        phoneNumber:
+          type: object
+          properties:
+            fallbackDestination:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - number
+                number:
+                  type: string
+                message:
+                  type: string
+                description:
+                  type: string
+            twilioPhoneNumber:
+              type: string
+            twilioAccountSid:
+              type: string
+            twilioAuthToken:
+              type: string
+            name:
+              type: string
+            assistantId:
+              type: string
+            squadId:
+              type: string
+            serverUrl:
+              type: string
+            serverUrlSecret:
+              type: string
+        customerId:
+          type: string
+        customer:
+          type: object
+          properties:
+            number:
+              type: string
+            sipUri:
+              type: string
+            name:
+              type: string
+            extension:
+              type: string
+        name:
+          type: string
 securitySchemes:
   bearerAuth:
     type: http
