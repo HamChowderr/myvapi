@@ -1,15 +1,16 @@
 openapi: 3.1.0
 info:
-  title: MyVAPI
-  description: Manage your VAPI account with ChatGPT.
+  title: Combined API
+  description: Combined API schema for managing virtual assistant settings and tools
   version: 1.0.0
 servers:
   - url: https://api.vapi.ai
     description: VAPI API server
-securitySchemes:
-  bearerAuth:
-    type: http
-    scheme: bearer
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
 paths:
   /assistant:
     get:
@@ -1647,7 +1648,3 @@ components:
               type: string
         name:
           type: string
-securitySchemes:
-  bearerAuth:
-    type: http
-    scheme: bearer
